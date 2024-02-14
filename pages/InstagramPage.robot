@@ -1,6 +1,7 @@
 *** Settings ***
 
 Library  SeleniumLibrary
+Library  OperatingSystem
 Variables  ../keywords/Data.py  #Data.py nin içindekileri al kullan diyorum!
 Variables  ../locators/Locators.py
 
@@ -15,7 +16,7 @@ Instagram anasayfasina git
     #cookie metnini çıkarabilmek için instagramı gizli sekmede açman lazım!
 
 Instagram giris sayfasina basari ile baglandigini dogrula
-    ${actualFaceBaglanText}      Get Text       ${InsLocators.btnFaceBaglan}                         #InsLocators.btnFaceBaglan daki degeri text olarak al soldaki değeri ata dedik!
+    ${actualFaceBaglanText}      Get Text       ${InsLocators.btnFaceBaglan}                         #InsLocators.btnFaceBaglan daki degeri text olarak al actualFaceBaglanText değerine ata dedik!
     Should Be Equal As Strings       ${actualFaceBaglanText}       ${Datas.ExpectedBtnFaceTexti}     #beklenen ve sonuçta alınan sonuç aynı mı karşılaştırdım?  #assortion yaptım!
     Title Should Be    ${Datas.TitleBaglanti}
 
@@ -36,7 +37,28 @@ Gecersiz sifreyi gir
     Click Element    ${InsLocators.btnGiris}
 
 Hata mesajini dogrula
-    ${SifreHataMesaji}      Get Text       ${InsLocators.placeHataMesaji}        #InsLocators.placeHataMesaji daki degeri text olarak al soldaki değeri ata dedik!
+    ${SifreHataMesaji}      Get Text       ${InsLocators.placeHataMesaji}        #InsLocators.placeHataMesaji daki degeri text olarak al SifreHataMesaji değerine ata dedik!
     Should Be Equal As Strings       ${SifreHataMesaji}       ${Datas.HataMesaji}
     Sleep    3s
+
+Gecersiz kullanici adi gir
+    Input Text    ${InsLocators.placeUserName}    ${Datas.InvalidEmail}
+    Input Password    ${InsLocators.placePassword}    ${Datas.Password}
+    Sleep     2s
+    Click Element    ${InsLocators.btnGiris}
+
+Kullanici adi icin hata mesajini dogrula
+    ${KullaniciAdiHataMesaji}      Get Text       ${InsLocators.placeHataMesaji}        #InsLocators.placeHataMesaji daki degeri text olarak al KullaniciAdiHataMesaji değerine ata dedik!
+    Should Be Equal As Strings       ${KullaniciAdiHataMesaji}       ${Datas.HataMesaji}
+    Sleep    3s
+
+
+Kullanici adi ve sifre alanlarini bos birakip kontrol edin
+    ${PlaceUserName}   Get Text    ${InsLocators.placeUserName}
+    Should Be Empty    ${PlaceUserName}  #buranın boş olup olmadığını kontrol ediyorum! boşsa geçiyorum!
+    ${PlacePassword}   Get Text    ${InsLocators.placePassword}
+    Should Be Empty    ${PlacePassword}  #buranın boş olup olmadığını kontrol ediyorum! boşsa geçiyorum!
+
+    ${is_disabled} =  Element Should Be Disabled    ${InsLocators.btnGiris}   #InsLocators.btnGiris butonu disable mı kontrolü yapıyorum! (doğrulama) devre dışı ise is_disabled a true yu atayacak!!
+    Run Keyword If    '${is_disabled}' == 'True'     Log    Öge devre disidir    #is_disabled true ise log mesajı yazdırmak için kullanilir.
 

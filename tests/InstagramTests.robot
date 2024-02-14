@@ -16,3 +16,10 @@ Instagram gecersiz sifreyle giris
     Gecersiz sifreyi gir
     Hata mesajini dogrula
 
+Instagram gecersiz kullanici adiyle giris
+    Gecersiz kullanici adi gir
+    Kullanici adi icin hata mesajini dogrula
+
+Bos bir kullanici adi ve sifreyle giris yap
+    Instagram giris sayfasina basari ile baglandigini dogrula
+    Kullanici adi ve sifre alanlarini bos birakip kontrol edin
