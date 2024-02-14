@@ -9,7 +9,7 @@ Variables  ../locators/Locators.py
 *** Keywords ***
 
 Instagram anasayfasina git
-    Open Browser     ${Datas.UrlInsta}      chrome
+    Open Browser     ${Datas.UrlInsta}      chrome    #options=add_argument("--headless") bunu aktif hale getirirsem her test koşumunda chromedan testi açmaz arka planda gerçekleştirir!
     Maximize Browser Window    #ekranı tam hale getirir
     Set Browser Implicit Wait    10s
     #Click Element    ${InsLocators.AccepterCookies}    #çıkan cookies metinine tıklanmasına söylüyorum!
@@ -61,4 +61,4 @@ Kullanici adi ve sifre alanlarini bos birakip kontrol edin
 
     ${is_disabled} =  Element Should Be Disabled    ${InsLocators.btnGiris}   #InsLocators.btnGiris butonu disable mı kontrolü yapıyorum! (doğrulama) devre dışı ise is_disabled a true yu atayacak!!
     Run Keyword If    '${is_disabled}' == 'True'     Log    Öge devre disidir    #is_disabled true ise log mesajı yazdırmak için kullanilir.
-
+    #Run Keyword tanımı Operation System Librarysinden gelir!
